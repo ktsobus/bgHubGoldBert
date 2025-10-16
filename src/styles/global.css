@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+/* Light touch defaults */
+:root {
+  --fg: oklch(96.2% 0.059 95.617);
+  --muted: oklch(82% 0.03 95);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  color: var(--fg);
+  background-color: rgb(10 10 10); /* neutral-950 */
+}
+
+/* Focus styles for keyboard users */
+:focus-visible {
+  outline: none;
+}

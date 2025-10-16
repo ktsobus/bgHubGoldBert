@@ -1,44 +1,61 @@
 ---
-
+/**
+ * Minimal centered search. Keyboard shortcuts:
+ *  - Ctrl+Space → focus/open
+ *  - / (slash)  → focus
+ */
 ---
 
-<div id="container" class="bg-neutral-950">
-  <main>
-    <div class="m-auto">
-    	<h1>Hello Goldbert...</h1>
+<section class="w-full max-w-xl">
+  <h1 class="sr-only">Suche</h1>
+
+  <form
+    action="https://duckduckgo.com/"
+    method="get"
+    role="search"
+    class="group"
+    onsubmit="/* let the browser navigate */"
+  >
+    <div class="relative">
+      <input
+        id="global-search"
+        name="q"
+        type="search"
+        autocomplete="off"
+        placeholder="Im Web suchen…"
+        class="w-full rounded-full bg-white/5 px-5 py-3 pr-12 placeholder-white/50 shadow-sm ring-1 ring-white/10 backdrop-blur transition focus:bg-white/7 focus:ring-2 focus:ring-white/30"
+      />
+      <kbd
+        class="pointer-events-none absolute top-1/2 right-2.5 -translate-y-1/2 rounded bg-white/5 px-1.5 py-1 text-[10px] leading-none text-[var(--muted)] ring-1 ring-white/10"
+        aria-hidden="true">Ctrl&nbsp;Space</kbd
+      >
     </div>
-  </main>
-</div>
+  </form>
+</section>
 
-<style>
-  #container {
-    font-family:
-      Inter, Roboto, "Helvetica Neue", "Arial Nova", "Nimbus Sans", Arial,
-      sans-serif;
-    height: 100%;
-  }
+<script is:inline>
+  (function () {
+    const input = document.getElementById("global-search");
 
-  main {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    color: oklch(96.2% 0.059 95.617);
-  }
+    function focusSearch(e) {
+      if (!input) return;
 
-  h1 {
-    font-size: var(--text-4xl);
-  }
+      // Slash to focus (except in inputs/textareas)
+      if (e.key === "/" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        const tag = (document.activeElement?.tagName || "").toLowerCase();
+        if (tag !== "input" && tag !== "textarea") {
+          e.preventDefault();
+          input.focus();
+        }
+      }
 
-  @media screen and (max-height: 368px) {
-    #news {
-      display: none;
+      // Ctrl + Space to focus
+      if (e.code === "Space" && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        input.focus();
+      }
     }
-  }
 
-  @media screen and (max-width: 768px) {
-    #container {
-      display: flex;
-      flex-direction: column;
-    }
-  }
-</style>
+    window.addEventListener("keydown", focusSearch);
+  })();
+</script>

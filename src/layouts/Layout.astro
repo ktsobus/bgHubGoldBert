@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import Fot from "../components/Fot.astro";
 ---
 
 <!doctype html>
@@ -9,18 +11,13 @@ import "../styles/global.css";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Goldbert</title>
+    <title>burgiHub</title>
   </head>
-  <body>
-    <slot />
+  <body class="flex min-h-screen flex-col bg-neutral-950 text-[var(--fg)]">
+    <Nav />
+    <main class="grid flex-1 place-items-center px-4">
+      <slot />
+    </main>
+    <Fot />
   </body>
 </html>
-
-<style>
-  html,
-  body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-  }
-</style>
